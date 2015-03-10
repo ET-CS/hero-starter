@@ -1,27 +1,6 @@
 /*
 
-  Strategies for the hero are contained within the "moves" object as
-  name-value pairs, like so:
-
-    //...
-    ambusher : function(gamedData, helpers){
-      // implementation of strategy.
-    },
-    heWhoLivesToFightAnotherDay: function(gamedData, helpers){
-      // implementation of strategy.
-    },
-    //...other strategy definitions.
-
-  The "moves" object only contains the data, but in order for a specific
-  strategy to be implemented we MUST set the "move" variable to a
-  definite property.  This is done like so:
-
-  move = moves.heWhoLivesToFightAnotherDay;
-
-  You MUST also export the move function, in order for your code to run
-  So, at the bottom of this code, keep the line that says:
-
-  module.exports = move;
+  Strategies for ET-CS hero.
 
   The "move" function must return "North", "South", "East", "West", or "Stay"
   (Anything else will be interpreted by the game as "Stay")
@@ -39,6 +18,7 @@
 
 */
 
+/*
 // Strategy definitions
 var moves = {
   // Aggressor
@@ -178,9 +158,29 @@ var moves = {
     return helpers.findNearestHealthWell(gameData);
   }
  };
+*/
 
-//  Set our heros strategy
-var  move =  moves.aggressor;
+var ET = {
+    chooseNextMove : function(gameData, helpers) {
+	// TODO if no enemies left go for diamonds
+
+        // If hero's health is below 30
+        if (gameData.activeHero.health <= 50){
+    	    // If it is, head towards the nearest health well
+    	    return helpers.findNearestHealthWell(gameData);
+        } else {
+	    // TODO Calculate neariest weel, diamond, grave and weakest enemies.
+	    // If near health well
+	    // If it is, head towards it
+    	    // Otherwise, go attack nearby weaker enemy.
+    	    return helpers.findNearestWeakerOrEqualEnemy(gameData);
+    	    // TODO or go for diamonds?
+        }
+    }
+};
+
+// Set our heros strategy
+var move = ET.chooseNextMove;
 
 // Export the move function here
 module.exports = move;
